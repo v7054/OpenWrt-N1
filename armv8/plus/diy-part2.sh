@@ -13,10 +13,6 @@ sed -i 's/192.168.1.1/10.10.10.1/g' package/base-files/files/bin/config_generate
 # Autocore
 sed -i 's/TARGET_rockchip/TARGET_rockchip\|\|TARGET_armvirt/g' package/lean/autocore/Makefile
 
-# Cpufreq
-sed -i 's/LUCI_DEPENDS.*/LUCI_DEPENDS:=\@\(arm\|\|aarch64\)/g' feeds/luci/applications/luci-app-cpufreq/Makefile
-sed -i 's/services/system/g' feeds/luci/applications/luci-app-cpufreq/luasrc/controller/cpufreq.lua
-
 # Modify system hostname
 sed -i 's/OpenWrt/N1/g' package/base-files/files/bin/config_generate
 sed -i "s/OpenWrt /v8040 Build $(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt /g" package/lean/default-settings/files/zzz-default-settings
@@ -31,17 +27,14 @@ rm -rf feeds/luci/applications/luci-app-argon-config
 rm -rf feeds/luci/applications/luci-app-autotimeset
 rm -rf feeds/luci/applications/luci-app-ddnsto
 rm -rf feeds/luci/applications/luci-app-dockerman
-rm -rf feeds/luci/applications/luci-app-eqos
 rm -rf feeds/luci/applications/luci-app-netdata
 rm -rf feeds/luci/applications/luci-app-netspeedtest
 rm -rf feeds/luci/applications/luci-app-onliner
 rm -rf feeds/luci/applications/luci-app-openclash
-rm -rf feeds/luci/applications/luci-app-pushbot
 rm -rf feeds/luci/applications/luci-app-serverchan
 rm -rf feeds/luci/applications/luci-app-unblockneteasemusic
 rm -rf feeds/luci/applications/luci-app-wrtbwmon
 rm -rf feeds/luci/themes/luci-theme-argon
-rm -rf feeds/luci/themes/luci-theme-edge
 rm -rf feeds/luci/themes/luci-theme-infinityfreedom
 
 # 添加额外软件包
@@ -50,8 +43,6 @@ git clone https://github.com/cyh92/luci-app-onliner.git package/luci-app-onliner
 git clone https://github.com/sirpdboy/luci-app-advanced.git package/luci-app-advanced
 git clone https://github.com/sirpdboy/luci-app-autotimeset.git package/luci-app-autotimeset
 git clone https://github.com/tty228/luci-app-serverchan.git package/luci-app-serverchan
-git clone https://github.com/zzsj0928/luci-app-pushbot.git package/luci-app-pushbot
-svn co https://github.com/kiddin9/openwrt-packages/trunk/luci-app-eqos package/luci-app-eqos
 svn co https://github.com/linkease/nas-packages-luci/trunk/luci/luci-app-ddnsto package/luci-app-ddnsto
 svn co https://github.com/linkease/nas-packages/trunk/network/services/ddnsto package/ddnsto
 svn co https://github.com/lisaac/luci-app-dockerman/trunk/applications/luci-app-dockerman package/luci-app-dockerman
@@ -84,11 +75,9 @@ make && sudo make install
 popd
 
 # Themes
-git clone https://github.com/davinyue/luci-theme-edgee package/luci-theme-edge
 git clone https://github.com/xiaoqingfengATGH/luci-theme-infinityfreedom package/luci-theme-infinityfreedom
 git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon.git package/luci-theme-argon
 git clone https://github.com/jerrykuku/luci-app-argon-config package/luci-app-argon-config
-
 
 # 修改makefile
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/luci\.mk/include \$(TOPDIR)\/feeds\/luci\/luci\.mk/g' {}
@@ -106,23 +95,26 @@ sed -i 's/services/nas/g' package/luci-app-aliyundrive-fuse/luasrc/model/cbi/ali
 sed -i 's/services/nas/g' package/luci-app-aliyundrive-fuse/luasrc/view/aliyundrive-fuse/*.htm
 
 # 修改插件名字
+sed -i 's/"AirPlay 2 音频接收器"/"AirPlay2"/g' `grep "AirPlay 2 音频接收器" -rl ./`
 sed -i 's/"Argon 主题设置"/"主题设置"/g' `grep "Argon 主题设置" -rl ./`
 sed -i 's/"Aria2 配置"/"Aria2下载"/g' `grep "Aria2 配置" -rl ./`
+sed -i 's/"ChinaDNS-NG"/"ChinaDNS"/g' `grep "ChinaDNS-NG" -rl ./`
 sed -i 's/"DDNS.to内网穿透"/"内网穿透"/g' `grep "DDNS.to内网穿透" -rl ./`
 sed -i 's/"KMS 服务器"/"KMS激活"/g' `grep "KMS 服务器" -rl ./`
 sed -i 's/"NFS 管理"/"NFS管理"/g' `grep "NFS 管理" -rl ./`
 sed -i 's/"Rclone"/"网盘挂载"/g' `grep "Rclone" -rl ./`
 sed -i 's/"SoftEther VPN 服务器"/"SoftEther"/g' `grep "SoftEther VPN 服务器" -rl ./`
-sed -i 's/"SoftEther VPN Server"/"SoftEther"/g' `grep "SoftEther VPN Server" -rl ./`
 sed -i 's/"TTYD 终端"/"终端"/g' `grep "TTYD 终端" -rl ./`
 sed -i 's/"Turbo ACC 网络加速"/"网络加速"/g' `grep "Turbo ACC 网络加速" -rl ./`
 sed -i 's/"UPnP"/"UPnP设置"/g' `grep "UPnP" -rl ./`
 sed -i 's/"Web 管理"/"Web"/g' `grep "Web 管理" -rl ./`
 sed -i 's/"WireGuard 状态"/"WiGd状态"/g' `grep "WireGuard 状态" -rl ./`
+sed -i 's/"iKoolProxy 滤广告"/"广告过滤"/g' `grep "iKoolProxy 滤广告" -rl ./`
 sed -i 's/"miniDLNA"/"DLNA服务"/g' `grep "miniDLNA" -rl ./`
 sed -i 's/"上网时间控制"/"上网控制"/g' `grep "上网时间控制" -rl ./`
 sed -i 's/"带宽监控"/"监控"/g' `grep "带宽监控" -rl ./`
 sed -i 's/"挂载 SMB 网络共享"/"挂载共享"/g' `grep "挂载 SMB 网络共享" -rl ./`
+sed -i 's/"易有云文件管理器"/"易有云"/g' `grep "易有云文件管理器" -rl ./`
 sed -i 's/"解除网易云音乐播放限制"/"音乐解锁"/g' `grep "解除网易云音乐播放限制" -rl ./`
 sed -i 's/"阿里云盘 FUSE"/"阿里云盘"/g' `grep "阿里云盘 FUSE" -rl ./`
 
