@@ -15,10 +15,7 @@ sed -i 's/TARGET_rockchip/TARGET_rockchip\|\|TARGET_armvirt/g' package/emortal/a
 
 # Modify system hostname
 sed -i 's/ImmortalWrt/N1/g' package/base-files/files/bin/config_generate
-wget https://raw.githubusercontent.com/kenzok8/small-package/main/diy/default-settings -O package/emortal/default-settings/files/99-default-settings
-sed -i 's/v$date1/$(TZ=UTC-8 date "+%Y.%m.%d")/g' package/emortal/default-settings/files/99-default-settings
-sed -i 's/Openwrt/ImmortalWrt/g' package/emortal/default-settings/files/99-default-settings
-sed -i 's/kenzo/v8040/g' package/emortal/default-settings/files/99-default-settings
+wget https://raw.githubusercontent.com/v8040/diy/main/default-settings -O package/emortal/default-settings/files/99-default-settings
 sed -i 's/invalid users = root/#invalid users = root/g' feeds/packages/net/samba4/files/smb.conf.template
 sed -i "s?/bin/login?/usr/libexec/login.sh?g" feeds/packages/utils/ttyd/files/ttyd.config
 
