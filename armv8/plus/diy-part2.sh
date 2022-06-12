@@ -21,7 +21,7 @@ sed -i "s?/bin/login?/usr/libexec/login.sh?g" feeds/packages/utils/ttyd/files/tt
 
 # 修改opkg源
 echo "src/gz openwrt_kiddin9 https://op.supes.top/packages/aarch64_cortex-a53" >> package/system/opkg/files/customfeeds.conf
-sed -i 's/option check_signature/d' package/system/opkg/files/opkg.conf
+sed -i '/option check_signature/d' package/system/opkg/files/opkg.conf
 
 # 移除重复软件包
 rm -rf feeds/luci/applications/luci-app-advanced
@@ -105,13 +105,17 @@ find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_U
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_URL:=\@GHCODELOAD/PKG_SOURCE_URL:=https:\/\/codeload\.github\.com/g' {}
 
 # 调整菜单
+sed -i 's/services/nas/g' package/luci-app-aliyundrive-fuse/luasrc/controller/*.lua
+sed -i 's/services/nas/g' package/luci-app-aliyundrive-fuse/luasrc/model/cbi/aliyundrive-fuse/*.lua
+sed -i 's/services/nas/g' package/luci-app-aliyundrive-fuse/luasrc/view/aliyundrive-fuse/*.htm
+sed -i 's/services/nas/g' package/luci-app-minidlna/luasrc/controller/*.lua
+sed -i 's/services/nas/g' package/luci-app-minidlna/luasrc/model/cbi/*.lua
+sed -i 's/services/nas/g' package/luci-app-minidlna/luasrc/view/*.htm
+sed -i 's/services/nas/g' package/luci-app-minidlna/luasrc/view/admin_status/index/*.htm
 sed -i 's/services/vpn/g' package/luci-app-openclash/luasrc/*.lua
 sed -i 's/services/vpn/g' package/luci-app-openclash/luasrc/controller/*.lua
 sed -i 's/services/vpn/g' package/luci-app-openclash/luasrc/model/cbi/openclash/*.lua
 sed -i 's/services/vpn/g' package/luci-app-openclash/luasrc/view/openclash/*.htm
-sed -i 's/services/nas/g' package/luci-app-aliyundrive-fuse/luasrc/controller/*.lua
-sed -i 's/services/nas/g' package/luci-app-aliyundrive-fuse/luasrc/model/cbi/aliyundrive-fuse/*.lua
-sed -i 's/services/nas/g' package/luci-app-aliyundrive-fuse/luasrc/view/aliyundrive-fuse/*.htm
 
 # 修改插件名字
 sed -i 's/"AirPlay 2 音频接收器"/"AirPlay2"/g' `grep "AirPlay 2 音频接收器" -rl ./`
