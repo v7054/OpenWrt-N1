@@ -22,11 +22,10 @@ sed -i "s?/bin/login?/usr/libexec/login.sh?g" feeds/packages/ttyd/files/ttyd.con
 
 # 修改opkg源
 echo "src/gz openwrt_kiddin9 https://op.supes.top/packages/aarch64_cortex-a53" >> package/system/opkg/files/customfeeds.conf
-sed -i 's/option check_signature/d' package/system/opkg/files/opkg.conf
+sed -i '/option check_signature/d' package/system/opkg/files/opkg.conf
 
 # 移除重复软件包
 rm -rf feeds/luci/applications/luci-app-advanced
-rm -rf feeds/luci/applications/luci-app-aliyundrive-fuse
 rm -rf feeds/luci/applications/luci-app-amlogic
 rm -rf feeds/luci/applications/luci-app-argon-config
 rm -rf feeds/luci/applications/luci-app-autotimeset
