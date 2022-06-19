@@ -16,7 +16,7 @@ on:
 
 env:
   REPO_URL: https://github.com/immortalwrt/immortalwrt
-  REPO_BRANCH: openwrt-18.06
+  REPO_BRANCH: openwrt-21.02
   FEEDS_CONF: armv8/plus/feeds.conf.default
   CONFIG_FILE: armv8/plus/.config
   DIY_P1_SH: armv8/plus/diy-part1.sh
